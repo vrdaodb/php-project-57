@@ -20,7 +20,9 @@
     </x-nav-link>
                 </div>
             </div>
-
+                <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
+    {{ __('Tasks') }}
+</x-nav-link>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
