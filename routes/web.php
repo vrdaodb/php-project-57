@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('task_statuses', TaskStatusController::class)->middleware('auth');
+Route::get('task_statuses', [TaskStatusController::class, 'index'])->name('task_statuses.index');
 Route::resource('tasks', TaskController::class)->middleware('auth');
 Route::resource('labels', LabelController::class)->middleware('auth');
 
