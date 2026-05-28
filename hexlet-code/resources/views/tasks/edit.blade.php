@@ -42,4 +42,14 @@
             <button type="submit">Update</button>
         </form>
     </div>
+    <div class="mb-3">
+    <label for="labels">Labels</label>
+    <select name="labels[]" id="labels" multiple>
+        @foreach($labels as $label)
+            <option value="{{ $label->id }}" {{ in_array($label->id, old('labels', [])) ? 'selected' : '' }}>
+                {{ $label->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 </x-app-layout>

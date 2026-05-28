@@ -19,6 +19,7 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all();
         $users = User::all();
+        $labels = Label::all();
         return view('tasks.create', compact('statuses', 'users'));
     }
 
@@ -32,6 +33,7 @@ class TaskController extends Controller
         $task->fill($request->all());
         $task->created_by_id = auth()->id();
         $task->save();
+        $task->labels()->sync($request->labels ?? []);
         flash('Task created successfully')->success();
         return redirect()->route('tasks.index');
     }
@@ -45,6 +47,7 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all();
         $users = User::all();
+        $labels = Label::all();
         return view('tasks.edit', compact('task', 'statuses', 'users'));
     }
 
@@ -56,6 +59,7 @@ class TaskController extends Controller
         ]);
         $task->fill($request->all());
         $task->save();
+        $task->labels()->sync($request->labels ?? []);
         flash('Task updated successfully')->success();
         return redirect()->route('tasks.index');
     }

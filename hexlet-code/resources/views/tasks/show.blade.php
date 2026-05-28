@@ -10,6 +10,7 @@
         <p>Description: {{ $task->description }}</p>
         <p>Creator: {{ $task->creator->name }}</p>
         <p>Assigned To: {{ $task->assignedTo?->name }}</p>
+        <p>Labels: {{ $task->labels->pluck('name')->join(', ') }}</p>
         <a href="{{ route('tasks.edit', $task) }}">Edit</a>
     </div>
 </x-app-layout>
