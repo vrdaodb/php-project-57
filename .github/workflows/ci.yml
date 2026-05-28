@@ -19,15 +19,12 @@ jobs:
           php-version: '8.4'
 
       - name: Install dependencies
-        working-directory: hexlet-code
         run: composer install
 
       - name: Run tests
-        working-directory: hexlet-code
         run: php artisan test
 
       - name: Run linter
-        working-directory: hexlet-code
         run: composer lint
       
     
