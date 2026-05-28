@@ -4,9 +4,47 @@
             Tasks
         </h2>
     </x-slot>
-
     <div class="container mx-auto py-4">
         <a href="{{ route('tasks.create') }}">Create</a>
+
+        <form method="GET" action="{{ route('tasks.index') }}">
+            <div>
+                <label for="filter[status_id]">Status</label>
+                <select name="filter[status_id]" id="filter[status_id]">
+                    <option value="">All</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status->id }}" {{ request('filter.status_id') == $status->id ? 'selected' : '' }}>
+                            {{ $status->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="filter[assigned_to_id]">Assigned To</label>
+                <select name="filter[assigned_to_id]" id="filter[assigned_to_id]">
+                    <option value="">All</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ request('filter.assigned_to_id') == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="filter[labels][id]">Label</label>
+                <select name="filter[labels][id]" id="filter[labels][id]">
+                    <option value="">All</option>
+                    @foreach($labels as $label)
+                        <option value="{{ $label->id }}" {{ request('filter.labels.id') == $label->id ? 'selected' : '' }}>
+                            {{ $label->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit">Filter</button>
+            <a href="{{ route('tasks.index') }}">Reset</a>
+        </form>
+
         <table class="table w-full mt-4">
             <thead>
                 <tr>

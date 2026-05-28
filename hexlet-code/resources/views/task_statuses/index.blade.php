@@ -4,7 +4,6 @@
             Task Statuses
         </h2>
     </x-slot>
-
     <div class="container mx-auto py-4">
         <a href="{{ route('task_statuses.create') }}" class="btn">Create</a>
         <table class="table w-full mt-4">

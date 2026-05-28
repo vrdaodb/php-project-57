@@ -5,22 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
     public function index()
-    {
-        $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
-    }
+{
+    $tasks = QueryBuilder::for(Task::class)
+        ->allowedFilters(
+            AllowedFilter::exact('status_id'),
+            AllowedFilter::exact('assigned_to_id'),
+            AllowedFilter::exact('labels.id'),
+        )
+        ->get();
+
+    $statuses = TaskStatus::all();
+    $users = User::all();
+    $labels = Label::all();
+
+    return view('tasks.index', compact('tasks', 'statuses', 'users', 'labels'));
+}
 
     public function create()
     {
         $statuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
-        return view('tasks.create', compact('statuses', 'users'));
+        return view('tasks.create', compact('statuses', 'users', 'labels'));
     }
 
     public function store(Request $request)
@@ -48,7 +62,7 @@ class TaskController extends Controller
         $statuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
-        return view('tasks.edit', compact('task', 'statuses', 'users'));
+        return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
     public function update(Request $request, Task $task)
