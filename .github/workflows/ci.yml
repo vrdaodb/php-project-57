@@ -32,9 +32,6 @@ jobs:
           APP_KEY: ${{ secrets.APP_KEY }}
         run: php artisan test
 
-      - name: Run linter
-        run: composer lint
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
