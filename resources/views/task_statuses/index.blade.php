@@ -6,9 +6,9 @@
     </x-slot>
 
     <div class="container mx-auto py-4">
-        <a href="{{ route('task_statuses.create') }}">
-            Создать
-        </a>
+        @auth
+    <a href="{{ route('task_statuses.create') }}">Создать</a>
+@endauth
 
         <table class="w-full mt-4">
             <thead>
@@ -26,24 +26,16 @@
                         <td>{{ $status->name }}</td>
                         <td>{{ $status->created_at }}</td>
                         <td>
-                            <a href="{{ route('task_statuses.edit', $status) }}">
-                                Изменить
-                            </a>
+    @auth
+        <a href="{{ route('task_statuses.edit', $status) }}">Изменить</a>
 
-                            <form
-                                action="{{ route('task_statuses.destroy', $status) }}"
-                                method="POST"
-                                style="display:inline"
-                                onsubmit="return confirm('Вы уверены?')"
-                            >
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit">
-                                    Удалить
-                                </button>
-                            </form>
-                        </td>
+        <form action="{{ route('task_statuses.destroy', $status) }}" method="POST" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Удалить</button>
+        </form>
+    @endauth
+</td>
                     </tr>
                 @endforeach
             </tbody>
