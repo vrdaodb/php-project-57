@@ -61,7 +61,7 @@
                 </x-slot>
             </x-dropdown>
             @else
-            <a href="{{ route('login') }}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">{{ __('Log in') }}</a>
+            <a href="{{ route('login') }}" dusk="login" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">{{ __('Log in') }}</a>
             @endauth
         </div>
 

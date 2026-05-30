@@ -25,6 +25,7 @@
                     <td>{{ $label->name }}</td>
                     <td>{{ $label->description }}</td>
                     <td>{{ $label->created_at }}</td>
+                    @auth
                     <td>
                         <a href="{{ route('labels.edit', $label) }}">Изменить</a>
 
@@ -41,6 +42,7 @@
                             </button>
                         </form>
                     </td>
+                    @endauth
                 </tr>
                 @endforeach
             </tbody>
