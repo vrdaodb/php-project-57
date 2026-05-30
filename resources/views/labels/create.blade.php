@@ -14,7 +14,7 @@
                 <label for="description">Description</label>
                 <textarea name="description" id="description">{{ old('description') }}</textarea>
             </div>
-            <button type="submit">Create</button>
+            <button type="submit">Создать</button>
         </form>
     </div>
 </x-app-layout>

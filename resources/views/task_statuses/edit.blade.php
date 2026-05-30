@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Task Status
+            Изменение статуса
         </h2>
     </x-slot>
 
@@ -10,13 +10,13 @@
             @csrf
             @method('PATCH')
             <div class="mb-3">
-                <label for="name">Name</label>
+                <label for="name">Имя</label>
                 <input type="text" name="name" id="name" value="{{ old('name', $taskStatus->name) }}">
                 @error('name')
                     <div>{{ $message }}</div>
                 @enderror
             </div>
-            <button type="submit">Update</button>
+            <button type="submit">Обновить</button>
         </form>
     </div>
 </x-app-layout>
