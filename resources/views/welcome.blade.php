@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -9,10 +10,26 @@
 <body>
     @auth
         @include('layouts.navigation')
-    @endauth
 
-    <div class="container mx-auto py-4">
-        <h1>Привет от Хекслета!</h1>
-    </div>
+```
+    <form id="logout-form" method="POST" action="{{ route('logout') }}">
+        @csrf
+    </form>
+
+    <a
+        href="{{ route('logout') }}"
+        dusk="logout"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+    >
+        Logout
+    </a>
+@endauth
+
+<div class="container mx-auto py-4">
+    <h1>Привет от Хекслета!</h1>
+</div>
+```
+
 </body>
 </html>
+
