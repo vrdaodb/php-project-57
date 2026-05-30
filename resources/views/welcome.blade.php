@@ -12,7 +12,7 @@
         <form id="logout-form" method="POST" action="{{ route('logout') }}">
             @csrf
         </form>
-        
+        <a
             href="{{ route('logout') }}"
             dusk="logout"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
