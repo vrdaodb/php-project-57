@@ -15,7 +15,7 @@
                     <div>{{ $message }}</div>
                 @enderror
             </div>
-            <button type="submit">Создать</button>
+            <button type="submit" dusk="create-task-status">Создать</button>
         </form>
     </div>
 </x-app-layout>

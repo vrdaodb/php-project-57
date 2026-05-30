@@ -48,7 +48,7 @@ class TaskController extends Controller
         $task->created_by_id = auth()->id();
         $task->save();
         $task->labels()->sync($request->labels ?? []);
-        flash('Task created successfully')->success();
+        flash('Задача успешно создана')->success();
         return redirect()->route('tasks.index');
     }
 
@@ -74,18 +74,18 @@ class TaskController extends Controller
         $task->fill($request->all());
         $task->save();
         $task->labels()->sync($request->labels ?? []);
-        flash('Task updated successfully')->success();
+        flash('Задача успешно обновлена')->success();
         return redirect()->route('tasks.index');
     }
 
     public function destroy(Task $task)
     {
         if ($task->created_by_id !== auth()->id()) {
-            flash('You are not authorized to delete this task')->error();
+            flash('Задачу может удалить только её автор')->error();
             return redirect()->route('tasks.index');
         }
         $task->delete();
-        flash('Task deleted successfully')->success();
+        flash('Задача успешно удалена')->success();
         return redirect()->route('tasks.index');
     }
 }

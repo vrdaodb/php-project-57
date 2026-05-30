@@ -24,7 +24,7 @@ class LabelController extends Controller
             'name' => 'required|unique:labels|min:1',
         ]);
         Label::create($request->all());
-        flash('Label created successfully')->success();
+        flash('Метка успешно создана')->success();
         return redirect()->route('labels.index');
     }
 
@@ -39,7 +39,7 @@ class LabelController extends Controller
             'name' => 'required|min:1|unique:labels,name,' . $label->id,
         ]);
         $label->update($request->all());
-        flash('Label updated successfully')->success();
+        flash('Метка успешно обновлена')->success();
         return redirect()->route('labels.index');
     }
 
@@ -50,7 +50,7 @@ class LabelController extends Controller
             return redirect()->route('labels.index');
         }
         $label->delete();
-        flash('Label deleted successfully')->success();
+        flash('Метка успешно удалена')->success();
         return redirect()->route('labels.index');
     }
 }

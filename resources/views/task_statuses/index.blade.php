@@ -27,12 +27,13 @@
                         <td>{{ $status->created_at }}</td>
                         <td>
     @auth
-        <a href="{{ route('task_statuses.edit', $status) }}">Изменить</a>
+        <a href="{{ route('task_statuses.edit', $status) }}" dusk="edit-task-status-{{ $status->id }}">Изменить</a>
+
 
         <form action="{{ route('task_statuses.destroy', $status) }}" method="POST" style="display:inline">
             @csrf
             @method('DELETE')
-            <button type="submit">Удалить</button>
+            <button type="submit" dusk="delete-task-status-{{ $status->id }}">Удалить</button>
         </form>
     @endauth
 </td>
