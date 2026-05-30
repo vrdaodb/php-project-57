@@ -19,9 +19,12 @@
         >
             Logout
         </a>
+    @else
+        <a href="{{ route('login') }}" dusk="login">Войти</a>
     @endauth
     <div class="container mx-auto py-4">
         <h1>Привет от Хекслета!</h1>
     </div>
 </body>
 </html>
+

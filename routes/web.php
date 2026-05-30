@@ -23,6 +23,7 @@ Route::get('task_statuses', [TaskStatusController::class, 'index'])->name('task_
 Route::resource('task_statuses', TaskStatusController::class)->except(['index'])->middleware('auth');
 
 Route::resource('tasks', TaskController::class)->middleware('auth');
-Route::resource('labels', LabelController::class)->middleware('auth');
+Route::get('labels', [LabelController::class, 'index'])->name('labels.index');
+Route::resource('labels', LabelController::class)->except(['index'])->middleware('auth');
 
 require __DIR__.'/auth.php';
