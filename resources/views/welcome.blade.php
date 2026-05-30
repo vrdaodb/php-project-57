@@ -9,7 +9,6 @@
 <body>
     @auth
         @include('layouts.navigation')
-
         <form id="logout-form" method="POST" action="{{ route('logout') }}">
             @csrf
         </form>
@@ -21,7 +20,6 @@
             Logout
         </a>
     @endauth
-
     <div class="container mx-auto py-4">
         <h1>Привет от Хекслета!</h1>
     </div>
