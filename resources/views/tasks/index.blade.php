@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
     <div class="container mx-auto py-4">
-        <a href="{{ route('tasks.create') }}">Create</a>
+        <a href="{{ route('tasks.create') }}">Создать</a>
 
         <form method="GET" action="{{ route('tasks.index') }}">
             <div>
-                <label for="filter[status_id]">Status</label>
+                <label for="filter[status_id]">Статус</label>
                 <select name="filter[status_id]" id="filter[status_id]">
                     <option value="">All</option>
                     @foreach($statuses as $status)

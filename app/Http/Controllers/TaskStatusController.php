@@ -24,7 +24,7 @@ class TaskStatusController extends Controller
             'name' => 'required|unique:task_statuses|min:1',
         ]);
         TaskStatus::create($request->all());
-        flash(__('Task status created successfully'))->success();
+        flash(__('Статус успешно создан'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -39,7 +39,7 @@ class TaskStatusController extends Controller
             'name' => 'required|min:1|unique:task_statuses,name,' . $taskStatus->id,
         ]);
         $taskStatus->update($request->all());
-        flash(__('Task status updated successfully'))->success();
+        flash(__('Статус успешно изменён'))->success();
         return redirect()->route('task_statuses.index');
     }
 
@@ -50,7 +50,7 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
     }
     $taskStatus->delete();
-    flash('Task status deleted successfully')->success();
+    flash('Статус успешно удалён')->success();
     return redirect()->route('task_statuses.index');
 }
 }
