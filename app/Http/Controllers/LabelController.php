@@ -39,7 +39,7 @@ class LabelController extends Controller
             'name' => 'required|min:1|unique:labels,name,' . $label->id,
         ]);
         $label->update($request->all());
-        flash('Метка успешно обновлена')->success();
+        flash('Метка успешно изменена')->success();
         return redirect()->route('labels.index');
     }
 
