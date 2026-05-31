@@ -30,11 +30,25 @@
         <a href="{{ route('task_statuses.edit', $status) }}" dusk="edit-task-status-{{ $status->id }}">Изменить</a>
 
 
-        <form action="{{ route('task_statuses.destroy', $status) }}" method="POST" style="display:inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" dusk="delete-task-status-{{ $status->id }}">Удалить</button>
-        </form>
+        <form
+    id="delete-status-{{ $status->id }}"
+    action="{{ route('task_statuses.destroy', $status) }}"
+    method="POST"
+    style="display:none"
+>
+    @csrf
+    @method('DELETE')
+</form>
+
+<a
+    href="#"
+    onclick="event.preventDefault();
+             if (confirm('Вы уверены?')) {
+                 document.getElementById('delete-status-{{ $status->id }}').submit();
+             }"
+>
+    Удалить
+</a>
     @endauth
 </td>
                     </tr>

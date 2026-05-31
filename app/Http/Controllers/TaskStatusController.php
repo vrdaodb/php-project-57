@@ -19,14 +19,22 @@ class TaskStatusController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
+{
+    $request->validate(
+        [
             'name' => 'required|unique:task_statuses|min:1',
-        ]);
-        TaskStatus::create($request->all());
-        flash(__('Статус успешно создан'))->success();
-        return redirect()->route('task_statuses.index');
-    }
+        ],
+        [
+            'name.unique' => 'Статус с таким именем уже существует',
+        ]
+    );
+
+    TaskStatus::create($request->all());
+
+    flash('Статус успешно создан')->success();
+
+    return redirect()->route('task_statuses.index');
+}
 
     public function edit(TaskStatus $taskStatus)
     {
@@ -34,14 +42,22 @@ class TaskStatusController extends Controller
     }
 
     public function update(Request $request, TaskStatus $taskStatus)
-    {
-        $request->validate([
+{
+    $request->validate(
+        [
             'name' => 'required|min:1|unique:task_statuses,name,' . $taskStatus->id,
-        ]);
-        $taskStatus->update($request->all());
-        flash(__('Статус успешно изменён'))->success();
-        return redirect()->route('task_statuses.index');
-    }
+        ],
+        [
+            'name.unique' => 'Статус с таким именем уже существует',
+        ]
+    );
+
+    $taskStatus->update($request->all());
+
+    flash('Статус успешно изменён')->success();
+
+    return redirect()->route('task_statuses.index');
+}
 
     public function destroy(TaskStatus $taskStatus)
 {
