@@ -20,7 +20,7 @@
             dusk="logout"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
         >
-            Выйти
+            Выход
         </a>
     @else
         <a href="{{ route('login') }}" dusk="login">Войти</a>
