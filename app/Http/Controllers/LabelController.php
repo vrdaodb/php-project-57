@@ -10,6 +10,7 @@ class LabelController extends Controller
     public function index()
     {
         $labels = Label::all();
+
         return view('labels.index', compact('labels'));
     }
 
@@ -20,11 +21,19 @@ class LabelController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:labels|min:1',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|unique:labels|min:1',
+            ],
+            [
+                'name.unique' => 'Метка с таким именем уже существует',
+            ]
+        );
+
         Label::create($request->all());
+
         flash('Метка успешно создана')->success();
+
         return redirect()->route('labels.index');
     }
 
@@ -35,11 +44,19 @@ class LabelController extends Controller
 
     public function update(Request $request, Label $label)
     {
-        $request->validate([
-            'name' => 'required|min:1|unique:labels,name,' . $label->id,
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|min:1|unique:labels,name,' . $label->id,
+            ],
+            [
+                'name.unique' => 'Метка с таким именем уже существует',
+            ]
+        );
+
         $label->update($request->all());
+
         flash('Метка успешно изменена')->success();
+
         return redirect()->route('labels.index');
     }
 
@@ -47,10 +64,14 @@ class LabelController extends Controller
     {
         if ($label->tasks()->exists()) {
             flash('Не удалось удалить метку')->error();
+
             return redirect()->route('labels.index');
         }
+
         $label->delete();
+
         flash('Метка успешно удалена')->success();
+
         return redirect()->route('labels.index');
     }
 }
