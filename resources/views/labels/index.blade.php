@@ -28,21 +28,30 @@
                     <td>{{ $label->created_at }}</td>
                     @auth
                     <td>
-                        <a href="{{ route('labels.edit', $label) }}">Изменить</a>
+    @auth
+        <a href="{{ route('labels.edit', $label) }}">Изменить</a>
 
-                        <form
-                            action="{{ route('labels.destroy', $label) }}"
-                            method="POST"
-                            style="display:inline"
-                        >
-                            @csrf
-                            @method('DELETE')
+        <form
+            id="delete-label-{{ $label->id }}"
+            action="{{ route('labels.destroy', $label) }}"
+            method="POST"
+            style="display:none"
+        >
+            @csrf
+            @method('DELETE')
+        </form>
 
-                            <button type="submit">
-                                Удалить
-                            </button>
-                        </form>
-                    </td>
+        <a
+            href="#"
+            onclick="event.preventDefault();
+                     if (confirm('Вы уверены?')) {
+                         document.getElementById('delete-label-{{ $label->id }}').submit();
+                     }"
+        >
+            Удалить
+        </a>
+    @endauth
+</td>
                     @endauth
                 </tr>
                 @endforeach
