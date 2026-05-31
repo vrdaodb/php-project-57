@@ -7,7 +7,7 @@
 
     <div class="container mx-auto py-4">
         @auth
-    <a href="{{ route('task_statuses.create') }}">Создать</a>
+    <a href="{{ route('task_statuses.create') }}">Создать статус</a>
 @endauth
 
         <table class="w-full mt-4">

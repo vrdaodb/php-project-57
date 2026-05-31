@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="container mx-auto py-4">
-        <a href="{{ route('labels.create') }}">Создать</a>
+        <a href="{{ route('labels.create') }}">Создать метку</a>
 
         <table class="w-full mt-4">
             <thead>

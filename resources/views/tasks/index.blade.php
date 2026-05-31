@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div class="container mx-auto py-4">
-        <a href="{{ route('tasks.create') }}">Создать</a>
+        <a href="{{ route('tasks.create') }}">Создать задачу</a>
         <form method="GET" action="{{ route('tasks.index') }}">
             <div>
                 <label for="filter[status_id]">Статус</label>
@@ -65,14 +65,16 @@
                     <td>{{ $task->assignedTo?->name }}</td>
                     <td>{{ $task->created_at }}</td>
                     <td>
-                        <a href="{{ route('tasks.edit', $task) }}">Изменить</a>
-                        @if($task->created_by_id === auth()->id())
-                        <form action="{{ route('tasks.destroy', $task) }}" method="POST" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Удалить</button>
-                        </form>
-                        @endif
+    @auth
+        <a href="{{ route('tasks.edit', $task) }}">Изменить</a>
+    @endauth
+                        @auth
+    @if($task->created_by_id === auth()->id())
+        <form ...>
+            <button type="submit">Удалить</button>
+        </form>
+    @endif
+@endauth
                     </td>
                 </tr>
                 @endforeach
