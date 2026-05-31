@@ -6,8 +6,9 @@
     </x-slot>
 
     <div class="container mx-auto py-4">
+    @auth
         <a href="{{ route('labels.create') }}">Создать метку</a>
-
+    @endauth
         <table class="w-full mt-4">
             <thead>
                 <tr>
