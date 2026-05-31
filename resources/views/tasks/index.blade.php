@@ -97,12 +97,9 @@
                             </a>
                         </td>
 
-                        <td>{{ $task->status->name }}</td>
-
-                        <td>{{ $task->creator->name }}</td>
-
+                        <td>{{ $task->status?->name }}</td>
+                        <td>{{ $task->creator?->name }}</td>
                         <td>{{ $task->assignedTo?->name }}</td>
-
                         <td>
                             {{ $task->created_at->format('d.m.Y') }}
                         </td>
