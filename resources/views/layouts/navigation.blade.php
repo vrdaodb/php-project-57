@@ -11,19 +11,19 @@
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Главная') }}
                 </x-nav-link>
 
                 <x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.*')">
-                    {{ __('Task Statuses') }}
+                    {{ __('Статусы задач') }}
                 </x-nav-link>
 
                 <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
-                    {{ __('Tasks') }}
+                    {{ __('Задачи') }}
                 </x-nav-link>
 
                 <x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.*')">
-                    {{ __('Labels') }}
+                    {{ __('Метки') }}
                 </x-nav-link>
             </div>
         </div>
@@ -46,8 +46,8 @@
 
                 <x-slot name="content">
                     <x-dropdown-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-dropdown-link>
+    Профиль
+</x-dropdown-link>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -55,13 +55,13 @@
                         <x-dropdown-link
         :href="route('logout')"
         onclick="event.preventDefault(); this.closest('form').submit();">
-        {{ __('Log Out') }}
+        {{ __('Выход') }}
     </x-dropdown-link>
 </form>
                 </x-slot>
             </x-dropdown>
             @else
-            <a href="{{ route('login') }}" dusk="login" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">{{ __('Log in') }}</a>
+            <a href="{{ route('login') }}" dusk="login" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">{{ __('Войти') }}</a>
             @endauth
         </div>
 
@@ -93,23 +93,22 @@
 <!-- Responsive Navigation Menu -->
 <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
     <div class="pt-2 pb-3 space-y-1">
-        <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Dashboard') }}
-        </x-responsive-nav-link>
+        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+    Главная
+</x-nav-link>
 
-        <x-responsive-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.*')">
-            {{ __('Task Statuses') }}
-        </x-responsive-nav-link>
+<x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.*')">
+    Статусы задач
+</x-nav-link>
 
-        <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
-            {{ __('Tasks') }}
-        </x-responsive-nav-link>
+<x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
+    Задачи
+</x-nav-link>
 
-        <x-responsive-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.*')">
-            {{ __('Labels') }}
-        </x-responsive-nav-link>
+<x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.*')">
+    Метки
+</x-nav-link>
     </div>
-
     @auth
     <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
         <div class="px-4">
@@ -124,16 +123,17 @@
 
         <div class="mt-3 space-y-1">
             <x-responsive-nav-link :href="route('profile.edit')">
-                {{ __('Profile') }}
+                {{ __('Профиль') }}
             </x-responsive-nav-link>
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
-                <x-responsive-nav-link :href="route('logout')"
-                    onclick="event.preventDefault(); this.closest('form').submit();">
-                    {{ __('Log Out') }}
-                </x-responsive-nav-link>
+                <x-dropdown-link
+    :href="route('logout')"
+    onclick="event.preventDefault(); this.closest('form').submit();">
+    Выход
+</x-dropdown-link>
             </form>
         </div>
     </div>

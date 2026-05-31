@@ -7,24 +7,26 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
+
     @auth
         @include('layouts.navigation')
+
         <form id="logout-form" method="POST" action="{{ route('logout') }}">
             @csrf
         </form>
+
         <a
-            href="{{ route('logout') }}"
+            href="#"
             dusk="logout"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
         >
-            Logout
+            Выйти
         </a>
     @else
         <a href="{{ route('login') }}" dusk="login">Войти</a>
     @endauth
-    <div class="container mx-auto py-4">
-        <h1>Привет от Хекслета!</h1>
-    </div>
+
+    <h1>Привет от Хекслета!</h1>
+
 </body>
 </html>
-
