@@ -45,12 +45,19 @@ class TaskController extends Controller
 }
     public function store(Request $request)
 {
-    $request->validate([
-        'name' => 'required',
-        'status_id' => 'required',
-    ]);
+    $request->validate(
+        [
+            'name' => 'required',
+            'status_id' => 'required',
+        ],
+        [
+            'name.required' => 'Это обязательное поле',
+            'status_id.required' => 'Это обязательное поле',
+        ]
+    );
 
     $task = new Task();
+
     $task->fill($request->all());
     $task->created_by_id = auth()->id();
     $task->save();
@@ -60,6 +67,7 @@ class TaskController extends Controller
     return redirect()
         ->route('tasks.index')
         ->with('success', 'Задача успешно создана');
+}
 }
     public function show(Task $task)
     {
@@ -76,20 +84,16 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
 {
-    $request->validate([
-        'name' => 'required',
-        'status_id' => 'required',
-    ]);
-
-    $task->fill($request->all());
-    $task->save();
-
-    $task->labels()->sync($request->labels ?? []);
-
-    return redirect()
-        ->route('tasks.index')
-        ->with('success', 'Задача успешно изменена');
-}
+    $request->validate(
+        [
+            'name' => 'required',
+            'status_id' => 'required',
+        ],
+        [
+            'name.required' => 'Это обязательное поле',
+            'status_id.required' => 'Это обязательное поле',
+        ]
+    );
 
     public function destroy(Task $task)
 {

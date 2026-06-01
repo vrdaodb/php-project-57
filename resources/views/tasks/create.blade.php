@@ -25,12 +25,17 @@
             <div class="mb-3">
                 <label for="status_id">Статус</label>
                 <select name="status_id" id="status_id">
-                    @foreach($statuses as $status)
-                        <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
-                            {{ $status->name }}
-                        </option>
-                    @endforeach
-                </select>
+    <option value="">Выберите статус</option>
+
+    @foreach($statuses as $status)
+        <option
+            value="{{ $status->id }}"
+            {{ old('status_id') == $status->id ? 'selected' : '' }}
+        >
+            {{ $status->name }}
+        </option>
+    @endforeach
+</select>
 
                 @error('status_id')
                     <div>{{ $message }}</div>
