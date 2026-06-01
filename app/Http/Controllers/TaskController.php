@@ -29,14 +29,19 @@ class TaskController extends Controller
     return view('tasks.index', compact('tasks', 'statuses', 'users', 'labels'));
 }
 
-    public function create()
-    {
-        $statuses = TaskStatus::all();
-        $users = User::all();
-        $labels = Label::all();
-        return view('tasks.create', compact('statuses', 'users', 'labels'));
-    }
+//    public function create()
+//{
+//    dd('create works');
+//}
 
+    public function create()
+{
+    $statuses = TaskStatus::all();
+    $users = User::all();
+    $labels = Label::all();
+
+    return view('tasks.create', compact('statuses', 'users', 'labels'));
+}
     public function store(Request $request)
     {
         $request->validate([

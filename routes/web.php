@@ -10,6 +10,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test123', function () {
+    return 'WORKS';
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -43,16 +48,31 @@ Route::resource('task_statuses', TaskStatusController::class)
 |
 */
 
+// Публичные маршруты
 Route::get('/tasks', [TaskController::class, 'index'])
     ->name('tasks.index');
 
+// Авторизованные действия
+Route::middleware('auth')->group(function () {
+    Route::get('/tasks/create', [TaskController::class, 'create'])
+        ->name('tasks.create');
+
+    Route::post('/tasks', [TaskController::class, 'store'])
+        ->name('tasks.store');
+
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])
+        ->name('tasks.edit');
+
+    Route::put('/tasks/{task}', [TaskController::class, 'update'])
+        ->name('tasks.update');
+
+    Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
+        ->name('tasks.destroy');
+});
+
+// show ВСЕГДА последним
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->name('tasks.show');
-
-Route::resource('tasks', TaskController::class)
-    ->except(['index', 'show'])
-    ->middleware('auth');
-
 /*
 |--------------------------------------------------------------------------
 | Labels
