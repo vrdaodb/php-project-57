@@ -13,62 +13,56 @@ use Spatie\QueryBuilder\AllowedFilter;
 class TaskController extends Controller
 {
     public function index()
-{
-    $tasks = QueryBuilder::for(Task::class)
-        ->allowedFilters(
-            AllowedFilter::exact('status_id'),
-            AllowedFilter::exact('assigned_to_id'),
-            AllowedFilter::exact('labels.id'),
-            AllowedFilter::exact('created_by_id'),
-        )
-        ->get();
+    {
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters(
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('assigned_to_id'),
+                AllowedFilter::exact('labels.id'),
+                AllowedFilter::exact('created_by_id'),
+            )
+            ->get();
 
-    $statuses = TaskStatus::all();
-    $users = User::all();
-    $labels = Label::all();
+        $statuses = TaskStatus::all();
+        $users = User::all();
+        $labels = Label::all();
 
-    return view('tasks.index', compact('tasks', 'statuses', 'users', 'labels'));
-}
-
-//    public function create()
-//{
-//    dd('create works');
-//}
+        return view('tasks.index', compact('tasks', 'statuses', 'users', 'labels'));
+    }
 
     public function create()
-{
-    $statuses = TaskStatus::all();
-    $users = User::all();
-    $labels = Label::all();
+    {
+        $statuses = TaskStatus::all();
+        $users = User::all();
+        $labels = Label::all();
 
-    return view('tasks.create', compact('statuses', 'users', 'labels'));
-}
+        return view('tasks.create', compact('statuses', 'users', 'labels'));
+    }
+
     public function store(Request $request)
-{
-    $request->validate(
-        [
-            'name' => 'required',
-            'status_id' => 'required',
-        ],
-        [
-            'name.required' => 'Это обязательное поле',
-            'status_id.required' => 'Это обязательное поле',
-        ]
-    );
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'status_id' => 'required',
+            ],
+            [
+                'name.required' => 'Это обязательное поле',
+                'status_id.required' => 'Это обязательное поле',
+            ]
+        );
 
-    $task = new Task();
+        $task = new Task();
+        $task->fill($request->all());
+        $task->created_by_id = auth()->id();
+        $task->save();
+        $task->labels()->sync($request->labels ?? []);
 
-    $task->fill($request->all());
-    $task->created_by_id = auth()->id();
-    $task->save();
+        flash('Задача успешно создана')->success();
 
-    $task->labels()->sync($request->labels ?? []);
+        return redirect()->route('tasks.index');
+    }
 
-    return redirect()
-        ->route('tasks.index')
-        ->with('success', 'Задача успешно создана');
-}
-}
     public function show(Task $task)
     {
         return view('tasks.show', compact('task'));
@@ -79,34 +73,43 @@ class TaskController extends Controller
         $statuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
+
         return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
     public function update(Request $request, Task $task)
-{
-    $request->validate(
-        [
-            'name' => 'required',
-            'status_id' => 'required',
-        ],
-        [
-            'name.required' => 'Это обязательное поле',
-            'status_id.required' => 'Это обязательное поле',
-        ]
-    );
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'status_id' => 'required',
+            ],
+            [
+                'name.required' => 'Это обязательное поле',
+                'status_id.required' => 'Это обязательное поле',
+            ]
+        );
 
-    public function destroy(Task $task)
-{
-    if ($task->created_by_id !== auth()->id()) {
-        return redirect()
-            ->route('tasks.index')
-            ->with('error', 'Задачу может удалить только её автор');
+        $task->fill($request->all());
+        $task->save();
+        $task->labels()->sync($request->labels ?? []);
+
+        flash('Задача успешно изменена')->success();
+
+        return redirect()->route('tasks.index');
     }
 
-    $task->delete();
+    public function destroy(Task $task)
+    {
+        if ($task->created_by_id !== auth()->id()) {
+            flash('Задачу может удалить только её автор')->error();
+            return redirect()->route('tasks.index');
+        }
 
-    return redirect()
-        ->route('tasks.index')
-        ->with('success', 'Задача успешно удалена');
-}
+        $task->delete();
+
+        flash('Задача успешно удалена')->success();
+
+        return redirect()->route('tasks.index');
+    }
 }

@@ -30,17 +30,20 @@
                         {{ Auth::user()->name }}
                     </span>
 
-                    <a href="{{ route('profile.edit') }}">
-                        Профиль
-                    </a>
+                    @if (Route::has('profile.edit'))
+    <a href="{{ route('profile.edit') }}">
+        Профиль
+    </a>
+@endif
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
+    @csrf
+</form>
 
-                        <button type="submit">
-                            Выход
-                        </button>
-                    </form>
+<a href="{{ route('logout') }}"
+   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    Выход
+</a>
 
                 @else
 
