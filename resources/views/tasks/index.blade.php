@@ -105,30 +105,36 @@
                         </td>
 
                         <td>
-                            @auth
-                                <a href="{{ route('tasks.edit', $task) }}">
-                                    Изменить
-                                </a>
-                            @endauth
+    @auth
+        <a href="{{ route('tasks.edit', $task) }}">
+            Изменить
+        </a>
+    @endauth
 
-                            @auth
-                                @if ($task->created_by_id === auth()->id())
-                                    <form
-                                        method="POST"
-                                        action="{{ route('tasks.destroy', $task) }}"
-                                        style="display:inline"
-                                        onsubmit="return confirm('Вы уверены?');"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
+    @auth
+        @if ($task->created_by_id === auth()->id())
 
-                                        <button type="submit">
-                                            Удалить
-                                        </button>
-                                    </form>
-                                @endif
-                            @endauth
-                        </td>
+            <a href="#"
+               onclick="event.preventDefault();
+                        if (confirm('Вы уверены?')) {
+                            document.getElementById('delete-task-{{ $task->id }}').submit();
+                        }">
+                Удалить
+            </a>
+
+            <form
+                id="delete-task-{{ $task->id }}"
+                action="{{ route('tasks.destroy', $task) }}"
+                method="POST"
+                style="display:none;"
+            >
+                @csrf
+                @method('DELETE')
+            </form>
+
+        @endif
+    @endauth
+</td>
                     </tr>
                 @endforeach
             </tbody>

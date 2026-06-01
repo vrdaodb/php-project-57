@@ -19,6 +19,7 @@ class TaskController extends Controller
             AllowedFilter::exact('status_id'),
             AllowedFilter::exact('assigned_to_id'),
             AllowedFilter::exact('labels.id'),
+            AllowedFilter::exact('created_by_id'),
         )
         ->get();
 
