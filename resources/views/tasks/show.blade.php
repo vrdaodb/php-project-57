@@ -11,6 +11,6 @@
         <p>Creator: {{ $task->creator->name }}</p>
         <p>Assigned To: {{ $task->assignedTo?->name }}</p>
         <p>Labels: {{ $task->labels->pluck('name')->join(', ') }}</p>
-        <a href="{{ route('tasks.edit', $task) }}">Edit</a>
+        <a href="{{ route('tasks.edit', $task) }}">Изменить</a>
     </div>
 </x-app-layout>
