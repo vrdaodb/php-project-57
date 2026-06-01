@@ -54,7 +54,7 @@ class TaskController extends Controller
         $task->created_by_id = auth()->id();
         $task->save();
         $task->labels()->sync($request->labels ?? []);
-        flash('Задача успешно создана')->success();
+        ->with('success', 'Задача успешно создана');
         return redirect()->route('tasks.index');
     }
 
@@ -72,17 +72,21 @@ class TaskController extends Controller
     }
 
     public function update(Request $request, Task $task)
-    {
-        $request->validate([
-            'name' => 'required',
-            'status_id' => 'required',
-        ]);
-        $task->fill($request->all());
-        $task->save();
-        $task->labels()->sync($request->labels ?? []);
-        flash('Задача успешно изменена')->success();
-        return redirect()->route('tasks.index');
-    }
+{
+    $request->validate([
+        'name' => 'required',
+        'status_id' => 'required',
+    ]);
+
+    $task->fill($request->all());
+    $task->save();
+
+    $task->labels()->sync($request->labels ?? []);
+
+    return redirect()
+        ->route('tasks.index')
+        ->with('success', 'Задача успешно изменена');
+}
 
     public function destroy(Task $task)
     {
@@ -91,7 +95,7 @@ class TaskController extends Controller
             return redirect()->route('tasks.index');
         }
         $task->delete();
-        flash('Задача успешно удалена')->success();
+        ->with('success', 'Задача успешно удалена');
         return redirect()->route('tasks.index');
     }
 }
