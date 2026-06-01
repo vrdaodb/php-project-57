@@ -44,20 +44,23 @@ class TaskController extends Controller
     return view('tasks.create', compact('statuses', 'users', 'labels'));
 }
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'status_id' => 'required',
-        ]);
-        $task = new Task();
-        $task->fill($request->all());
-        $task->created_by_id = auth()->id();
-        $task->save();
-        $task->labels()->sync($request->labels ?? []);
-        ->with('success', 'Задача успешно создана');
-        return redirect()->route('tasks.index');
-    }
+{
+    $request->validate([
+        'name' => 'required',
+        'status_id' => 'required',
+    ]);
 
+    $task = new Task();
+    $task->fill($request->all());
+    $task->created_by_id = auth()->id();
+    $task->save();
+
+    $task->labels()->sync($request->labels ?? []);
+
+    return redirect()
+        ->route('tasks.index')
+        ->with('success', 'Задача успешно создана');
+}
     public function show(Task $task)
     {
         return view('tasks.show', compact('task'));
@@ -89,13 +92,17 @@ class TaskController extends Controller
 }
 
     public function destroy(Task $task)
-    {
-        if ($task->created_by_id !== auth()->id()) {
-            flash('Задачу может удалить только её автор')->error();
-            return redirect()->route('tasks.index');
-        }
-        $task->delete();
-        ->with('success', 'Задача успешно удалена');
-        return redirect()->route('tasks.index');
+{
+    if ($task->created_by_id !== auth()->id()) {
+        return redirect()
+            ->route('tasks.index')
+            ->with('error', 'Задачу может удалить только её автор');
     }
+
+    $task->delete();
+
+    return redirect()
+        ->route('tasks.index')
+        ->with('success', 'Задача успешно удалена');
+}
 }
